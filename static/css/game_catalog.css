@@ -1,0 +1,25 @@
+.catalog {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .game {
+    width: 200px;
+    text-align: center;
+  }
+  
+  .game img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .game h2 {
+    margin: 10px 0;
+  }
+  
+  .game .price {
+    font-weight: bold;
+  }
+  

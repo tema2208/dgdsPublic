@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Articles{% endblock %}
+{% block content %}
+<style type="text/css">
+body {
+    height: 100%;
+    background-image: url("/static/img/rpo.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+}
+
+.card-deck{
+    margin-top: 20px;
+}
+.card{
+    margin-top: 20px;
+}
+
+</style>
+
+<div class="card-deck">
+  {% for game in games %}
+  <div class="col-xl-3">
+      <div class="card">
+         <a href="{{ game.get_absolute_url }}">
+         <img class="card-img-top" src="{{ game.poster }}" alt="{{ game.name }}" width="auto" height="200px">
+         </a>
+         <div class="card-body">
+            <h5 class="card-title">{{ game.name }}</h5>
+            <p class="card-text">{{ game.price }}</p>
+         </div>
+      </div>
+</div>
+   {% endfor %}
+ </div>
+
+{% endblock %}
+
+
+

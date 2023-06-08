@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% block title %}
+{{game.name}} - {{ block.super }}
+{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+<style>
+    h1 {
+        font-family: 'Jura', sans-serif;
+        font-size: 50px;
+        margin-bottom: 20px;
+        margin-top: 40px;
+        color: #000005;
+        font-weight: normal;
+        text-decoration-line: underline;
+
+    }
+
+    h2{
+        font-family: 'Jura', sans-serif;
+        color: rgba(6, 6, 6, 0.85);
+        font-weight: normal;
+        font-size: 36px;
+        letter-spacing: 1px;
+    }
+    h3{
+        font-family: 'Jura', sans-serif;
+        font-size:xx-large;
+        color: #fafafa;
+        letter-spacing: 1px;
+    }
+    h5 {
+        color: #ffffff;
+        text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 40px #FFFFFF, 0 0 80px #FFFFFF, 0 0 90px #FFFFFF, 0 0 100px #FFFFFF, 0 0 150px #FFFFFF;
+        background: rgba(0,0,5,0);
+        font-family: 'Jura', serif;
+        transition: 0.5s;
+        font-size: 17px;
+    }
+    h6 {
+        color: #c8d3fd;
+        font-family: 'Jura', serif;
+    }
+    p{
+        letter-spacing: 1px;
+        color: #bfbfbf;
+        font-size: 17px;
+        font-family: 'Manrope', sans-serif;
+        font-weight: normal;
+    }
+
+   body{
+   background-color: #000000;
+   }
+
+   .sign_word {
+    color: #bfbfbf;
+    font-family: 'Jura', serif;
+   }
+
+   .get_game {
+        margin: auto;
+        width: 50%;
+        padding: 10px;
+   }
+
+   .form-control {
+        width: 100%;
+    }
+
+    .carousel-inner .carousel-item img {
+        width: 100%;
+        height: 800px;
+        object-fit: cover;
+    }
+
+    .messages {
+        color: #ffffff;
+        text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 40px #FFFFFF, 0 0 80px #FFFFFF, 0 0 90px #FFFFFF, 0 0 100px #FFFFFF, 0 0 150px #FFFFFF;
+        background: rgba(0,0,5,0);
+        font-family: 'Jura', serif;
+        transition: 0.5s;
+        font-size: 17px;
+    }
+    .card-footer{
+        text-align: center;
+    }
+
+    .carousel-caption {
+            position: absolute;
+            top: 85%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #fff;
+            padding: 10px;
+            width: 300px;
+        }
+</style>
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        {% for image in images %}
+            <li data-target="#myCarousel" data-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %}></li>
+        {% endfor %}
+    </ol>
+
+    <!-- Slides -->
+    <div class="carousel-inner">
+        {% for image in images %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{{ image }}" alt="Image">
+              </div>
+        {% endfor %}
+    </div>
+    <div class="carousel-caption d-none d-md-block">
+        <h3>{{ game.name }}</h5>
+        <p> {{ game.genre }} </p>
+      </div>
+    <!-- Controls -->
+    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+<hr class="hr-vertical-lines">
+
+<div class="card text-center">
+    <div class="card-header">
+      {{ game.platform }}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">About this game</h5>
+      <p class="card-text">{{ game.description }}</p>
+    </div>
+    <div class="card-footer text-muted">
+        <h5 class="">Buy now {{ game.price }} ETH</h5>
+        <h6 class="card-text">"{{ game.name }}" wallet address: {{ game.wallet_address }}</h6>
+    </div>
+  </div>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="get_game">
+        <div class="sign-wrap-2">
+            <span class="sign_word">Enter the transaction number to receive the game:</span>
+        </div>
+        {% render_field form.transaction_address placeholder="Transaction Address" class+="form-control" %}
+    </div>
+       <div class="d-flex justify-content-center mt-3 login_container">
+        {% for message in messages %}
+        <p class="messages" id="messages">{{ message }}</p>
+    {% endfor %}
+    </div>
+    <div class="d-flex justify-content-center mt-3 login_container">
+    <button class="btn btn1 btn-outline-light" type="submit">Check</button>
+</div>
+
+</form>
+{% endblock %}
+<script>
+    $(document).ready(function(){
+        $('.carousel').carousel();
+    });
+</script>
